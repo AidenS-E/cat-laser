@@ -1,0 +1,9 @@
+﻿CatLaserUnity/
+Builds/
+*.blend
+*.blend1
+*.py
+*.ps1
+*.log
+.DS_Store
+Thumbs.db

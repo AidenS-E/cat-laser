@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="theme-color" content="#0f141e" />
+  <title>CAT LASER — PAW SANCTUARY (v0.5 · 9:16 Mobile)</title>
+  <link rel="stylesheet" href="style.css" />
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js",
+        "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"
+      }
+    }
+  </script>
+</head>
+<body class="portrait-mode">
+  <div id="loading-overlay">
+    <div class="loading-box">
+      <div class="loading-spinner"></div>
+      <span>Загрузка 3D-ассетов...</span>
+    </div>
+  </div>
+
+  <div id="game-stage">
+    <div id="canvas-container"></div>
+
+    <!-- Compact 9:16 Portrait Mobile HUD -->
+    <div id="hud">
+      <div class="hud-top-row">
+        <div class="hud-pill hud-left">
+          <span class="hud-metric rescued" title="Спасено в PAW SANCTUARY">🐾 <b id="stat-rescued">0/26</b></span>
+          <span class="hud-metric gold" title="Золотые коты">★ <b id="stat-golden">0/3</b></span>
+          <span class="hud-metric lost" title="Ушли (раскусили или заскучали)">😒 <b id="stat-lost">0</b></span>
+        </div>
+
+        <div class="hud-pill timer-pill" id="timer-pill">
+          <span class="hud-metric timer">⏱ <b id="stat-timer">1:15</b></span>
+        </div>
+
+        <div class="hud-pill hud-right">
+          <span class="hud-metric feints" title="Финты выключением лазера">⚡ <b id="stat-feints">0</b></span>
+          <span class="hud-metric score" id="stat-score">0</span>
+        </div>
+      </div>
+
+      <div class="hud-sub-row">
+        <div class="bounce-pill hidden" id="bounce-pill">
+          <span id="bounce-text">1× РИКОШЕТ!</span>
+        </div>
+      </div>
+    </div>
+
+    <div id="onboard-toast">
+      Зажми палец / ЛКМ: <b>угол + длина</b> луча · <b>Отпусти</b> при прыжке — <b>ФИНТ!</b> · Веди котов в <b>PAW SANCTUARY</b>
+    </div>
+
+    <!-- Touch finger offset reticle -->
+    <div id="thumb-guide" class="hidden"></div>
+
+    <!-- Floating world popups container -->
+    <div id="popups-layer"></div>
+
+    <!-- Round Win / Lose Modal -->
+    <div id="result-modal" class="hidden">
+      <div class="result-card">
+        <div class="result-stars" id="result-stars">★★★</div>
+        <h2 id="result-title">Рейс завершён!</h2>
+        <p id="result-summary">Спасено 0 из 26 · Золотые 0/3 · Ушли 0 · Финты 0 · 0 очков</p>
+        <div class="result-actions">
+          <button class="btn primary" id="btn-retry-level">Ещё раз</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Collapsed bottom-right dev-tuning drawer inside 9:16 stage -->
+    <div id="tuning-panel" class="is-collapsed">
+      <div class="panel-body collapsed" id="panel-body">
+        <div class="slider-group">
+          <div class="slider-top"><span>Скорость котов</span><span id="val-cat-speed">6.4</span></div>
+          <input type="range" id="inp-cat-speed" min="4.0" max="10.0" step="0.2" value="6.4" />
+        </div>
+
+        <div class="slider-group">
+          <div class="slider-top"><span>Терпение котов</span><span id="val-patience">2.4с</span></div>
+          <input type="range" id="inp-patience" min="1.2" max="4.5" step="0.2" value="2.4" />
+        </div>
+
+        <div class="slider-group">
+          <div class="slider-top"><span>Длина луча (×)</span><span id="val-beam-scale">1.65×</span></div>
+          <input type="range" id="inp-beam-scale" min="1.1" max="2.4" step="0.05" value="1.65" />
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="action-row single">
+          <button class="btn primary" id="btn-restart-dev">Рестарт (R)</button>
+        </div>
+      </div>
+
+      <div class="panel-header">
+        <span class="panel-title-txt">Dev-тюнинг</span>
+        <div class="header-btns">
+          <button id="btn-mute" title="Звук">🔊</button>
+          <button id="btn-toggle-panel" title="Настройки (Tab)">⚙</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="game.js"></script>
+</body>
+</html>
